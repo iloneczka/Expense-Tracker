@@ -1,28 +1,9 @@
-# Napisz program, który ułatwi milionom Polaków śledzenie własnych wydatków oraz ich analizę. Program pozwala na łatwe dodawanie nowych wydatków i generowanie raportów. Aplikacja działa także pomiędzy uruchomieniami, przechowując wszystkie dane w pliku. Każdy wydatek ma id, opis oraz wielkość kwoty.
-
-# 1. Program posiada podkomendy add, report, export-python oraz import-csv. 
-
-# 2. Podkomenda add pozwala na dodanie nowego wydatku. Należy wówczas podać jako kolejne argumenty wiersza poleceń wielkość wydatku (jako int) oraz jego opis (w cudzysłowach). Na przykład:
-# $ python budget.py add 100 "stówa na zakupy". 
-# Jako id wybierz pierwszy wolny id - np. jeśli masz już wydatki z id = 1, 2, 4, 5, wówczas wybierz id = 3.
-
-# 3. Podkomenda report wyświetla wszystkie wydatki w tabeli. W tabeli znajduje się także kolumna "big?", w której znajduje się ptaszek, gdy wydatek jest duży, tzn. co najmniej 1000. Dodatkowo, na samym końcu wyświetlona jest suma wszystkich wydatów.
-
-# 4. Podkomenda export-python wyświetla listę wszystkich wydatków jako obiekt (hint: zaimplementuj poprawnie metodę __repr__ w klasie reprezentującej pojedynczy wydatek).
-
-# 5. Podkomenda import-csv importuję listę wydatków z pliku CSV.
-
-# 6. Program przechowuje pomiędzy uruchomieniami bazę wszystkich wydatków w pliku budget.db. Zapisuj i wczytuj stan używając modułu pickle. Jeżeli plik nie istnieje, to automatycznie stwórz nową, pustą bazę. Zauważ, że nie potrzebujemy podpolecenia init.
-
-# 7. Wielkość wydatku musi być dodatnią liczbą. Gdzie umieścisz kod sprawdzający, czy jest to spełnione? W jaki sposób zgłosisz, że warunek nie jest spełniony?
-
-# python3 "/Users/ilo/Desktop/PYTHON/Praktyczny_python_M07/Projekt 7.py" <command>
+# python 3 "/Users/ilo/Desktop/PYTHON/Praktyczny_python_M07/Projekt 7.py" <command>
 
 import csv
 import pickle
 import sys
 from typing import List
-
 import click
 
 DB_FILENAME = "budget.db"
@@ -39,7 +20,6 @@ class Expense:
     def __repr__(self):
         return f'Expense(id={self.id!r}, description={self.description!r}, amount={self.amount!r})'
 
-
 def read_db_or_init():
     try:
         with open(DB_FILENAME, 'rb') as stream:
@@ -52,14 +32,14 @@ def save_db(expenses: List[Expense]):
     with open(DB_FILENAME, 'wb') as stream:
         pickle.dump(expenses, stream)
 
-def find_new_id(expenses):
+def find_new_id(expenses: List[Expense]) -> int:
     ids = {expense.id for expense in expenses}
     counter = 1
     while counter in ids:
         counter += 1
     return counter
 
-def display_expenses(expenses: List[Expense]):
+def display_expenses(expenses: List[Expense]) -> None:
     if expenses:
         print("     MY LIST OF EXPENSES")
         print("----------------------------------")
@@ -73,7 +53,7 @@ def display_expenses(expenses: List[Expense]):
     else:
         print("The list of expenses is empty")     
 
-def sum_expenses_and_report(expenses: List[Expense]):
+def sum_expenses_and_report(expenses: List[Expense]) -> None:
     total_expenses = sum(expense.amount for expense in expenses)
     print("TOTAL: ", total_expenses)
 
@@ -83,9 +63,9 @@ def add_expense(description:str, amount: int, expenses: List[Expense]) ->None:
     if amount <= 0:
         raise ValueError("Amount must be a positive number")
     expense = Expense(
-        id=find_new_id(expenses),
-        description=description,
-        amount=amount,
+        id = find_new_id(expenses),
+        description = description,
+        amount = amount
     )
     expenses.append(expense)
 
@@ -107,7 +87,7 @@ def add(amount, description):
     try:
         add_expense(description, amount, expenses)
     except ValueError as e:
-        print(f':-( Błąd: {e.args[0]}')
+        print(f':-( Error: {e.args[0]}')
         sys.exit(1)
     save_db(expenses)
     print("Expense added successfully.")
