@@ -11,8 +11,6 @@ Commands:
 
 """
 
-# python3 "/Users/ilo/Desktop/PYTHON/Praktyczny_python_M07/Projekt 7.py" <command>
-
 import csv
 import pickle
 import sys
@@ -32,6 +30,9 @@ class Expense:
     
     def __repr__(self):
         return f'Expense(id={self.id!r}, description={self.description!r}, amount={self.amount!r})'
+    
+    def __str__(self):
+        return f'ID: {self.id}\nAmount: {self.amount}\nDescription: {self.description}'
 
 def read_db_or_init():
     """
@@ -216,3 +217,4 @@ def export_python():
 
 if __name__ == "__main__":
     cli()
+    
