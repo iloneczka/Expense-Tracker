@@ -1,19 +1,72 @@
-Napisz program, który ułatwi milionom Polaków śledzenie własnych wydatków oraz ich analizę. Program pozwala na łatwe dodawanie nowych wydatków i generowanie raportów. Aplikacja działa także pomiędzy uruchomieniami, przechowując wszystkie dane w pliku. Każdy wydatek ma id, opis oraz wielkość kwoty.
+# Expense Tracker 
 
-1. Program posiada podkomendy add, report, export-python oraz import-csv. 
+## Table of Contents
+- [General Info](#general-info)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Prerequisites](#prerequisites)
+- [Setup](#setup)
+- [Testing](#testing)
+- [Solutions](#solutions)
+- [Future Plans](#future-plans)
+- [Inspirations and Acknowledgments](#inspirations-and-acknowledgments)
 
-2. Podkomenda add pozwala na dodanie nowego wydatku. Należy wówczas podać jako kolejne argumenty wiersza poleceń wielkość wydatku (jako int) oraz jego opis (w cudzysłowach). Na przykład:
-$ python budget.py add 100 "stówa na zakupy". 
-Jako id wybierz pierwszy wolny id - np. jeśli masz już wydatki z id = 1, 2, 4, 5, wówczas wybierz id = 3.
+## General Info
+This is a Python program that helps track expenses and analyze them. The program allows for easy addition of new expenses and generation of reports. The application also works between runs by storing all data in a file. Each expense has an ID, description, and amount.
 
-3. Podkomenda report wyświetla wszystkie wydatki w tabeli. W tabeli znajduje się także kolumna "big?", w której znajduje się ptaszek, gdy wydatek jest duży, tzn. co najmniej 1000. Dodatkowo, na samym końcu wyświetlona jest suma wszystkich wydatów.
+## Features
+- Add new expenses with an amount and description.
+- Display all expenses and the total.
+- Delete the last expense from the list.
+- Import expenses from a CSV file.
+- Export expenses as Python objects.
 
-4. Podkomenda export-python wyświetla listę wszystkich wydatków jako obiekt (hint: zaimplementuj poprawnie metodę __repr__ w klasie reprezentującej pojedynczy wydatek).
+## Technologies Used
+The program is written in Python.
 
-5. Podkomenda import-csv importuję listę wydatków z pliku CSV.
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
-6. Program przechowuje pomiędzy uruchomieniami bazę wszystkich wydatków w pliku budget.db. Zapisuj i wczytuj stan używając modułu pickle. Jeżeli plik nie istnieje, to automatycznie stwórz nową, pustą bazę. Zauważ, że nie potrzebujemy podpolecenia init.
 
-7. Wielkość wydatku musi być dodatnią liczbą. Gdzie umieścisz kod sprawdzający, czy jest to spełnione? W jaki sposób zgłosisz, że warunek nie jest spełniony?
+## Prerequisites
+Before running the program, make sure you have Python 3.11.2 installed on your system and the required libraries.  
+If you haven't installed the click library yet, you can do so by running:
+,,,
+pip install click
+,,,
 
-# Praktyczny_python_M07
+## Setup
+To run the project locally, follow these steps:
+
+1. Clone this repository to your local machine.
+2. Navigate to the project directory.
+3. To execute the program, use the following command:
+,,,
+python3 expense_tracker.py <command>
+,,,
+
+### Usage
+The program can be used with the following commands:
+
+1. `add <amount> <description>`: Add a new expense. 
+Example: `python3 expense_tracker.py add 50 "Groceries"`
+2. `report`: Display all expenses and the total. 
+Example: `python3 expense_tracker.py report`
+3. `delete`: Delete the last expense from the list. 
+Example: `python3 expense_tracker.py delete`
+4. `import-csv <csv_file>`: Import expenses from a CSV file. 
+Example: `python3 expense_tracker.py import-csv expenses.csv`
+5. `export-python`: Export expenses as Python objects. 
+Example: `python3 expense_tracker.py export-python`
+
+## Testing
+
+TODO
+
+## Solutions
+The program uses a list of `Expense` objects to store the expenses. Expenses are saved in a file named `budget.db` using the `pickle` module, which allows data to be stored between runs.
+
+## Future Plans
+The program currently provides basic functionality for expense tracking. Future plans may include adding more advanced features such as data visualization, filtering expenses by date or category, and adding user authentication.
+
+## Inspirations and Acknowledgments
+This project was inspired by the "Praktyczny Python" training course and was adapted from the original version for educational purposes.
